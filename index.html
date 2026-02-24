@@ -101,6 +101,7 @@
   .badge-destructive { background: var(--destructive-light); color: var(--destructive); }
   .badge-warning { background: var(--warning-light); color: var(--warning); }
   .badge-gray { background: #f1f5f9; color: var(--text-muted); }
+  .badge-pending { background: var(--primary-light); color: var(--primary); }
 
   /* ── CARD ── */
   .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
@@ -275,21 +276,15 @@
       <p>Sistema de Gestão Financeira</p>
     </div>
 
-    <!-- Demo hint -->
-    <div style="background:#f1f5f9;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:12px;color:#475569;line-height:1.6">
-      <strong>👑 ADM:</strong> email <code>adm</code> · senha <code>123456</code><br>
-      <strong>👤 Colaborador:</strong> email <code>belami.viagens@gmail.com</code> · senha <code>123456</code>
-    </div>
-
     <!-- Login Form -->
     <div id="login-form">
       <div class="form-group">
         <label>Email</label>
-        <input type="text" class="form-control" id="login-email" placeholder="seu@email.com" value="adm" />
+        <input type="text" class="form-control" id="login-email" placeholder="seu@email.com" />
       </div>
       <div class="form-group">
         <label>Senha</label>
-        <input type="password" class="form-control" id="login-pass" placeholder="••••••" value="123456" />
+        <input type="password" class="form-control" id="login-pass" placeholder="••••••" />
       </div>
       <button class="btn btn-primary btn-full" onclick="doLogin()">Entrar</button>
       <div class="login-switch" style="margin-top:10px">
@@ -471,7 +466,7 @@
       <div class="tab-content" id="tab-checklist">
         <div class="page-header">
           <h2>💵 Registros de Trabalho</h2>
-          <button class="btn btn-primary" onclick="openModal('checklist-modal')">+ Novo Registro</button>
+          <button class="btn btn-primary" onclick="openAddWorkLog()">+ Novo Registro</button>
         </div>
 
         <div class="card mb-4">
@@ -690,7 +685,8 @@
 <!-- CHECKLIST MODAL -->
 <div class="modal-overlay hidden" id="checklist-modal">
   <div class="modal modal-lg">
-    <h2>💵 Novo Registro de Trabalho</h2>
+    <h2 id="checklist-modal-title">💵 Novo Registro de Trabalho</h2>
+    <input type="hidden" id="cl-edit-id" />
     <div class="form-group">
       <label>Cliente</label>
       <select class="form-control" id="cl-client">
@@ -704,6 +700,7 @@
     <div class="form-group">
       <label>Status</label>
       <select class="form-control" id="cl-status">
+        <option value="Pendente">Pendente</option>
         <option value="Confirmado">Confirmado</option>
         <option value="Cancelado">Cancelado</option>
       </select>
@@ -1073,7 +1070,7 @@
   .emp-tab-btn:hover { color:var(--text);background:var(--bg); }
 </style>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ════════════════════════════════════════════════
 // DATA STORE (in-memory mock)
 // ════════════════════════════════════════════════
@@ -1545,10 +1542,15 @@ function renderChecklist() {
 
   const confirmed = filtered.filter(l => l.status === 'Confirmado');
   const cancelled = filtered.filter(l => l.status === 'Cancelado');
+  const pending = filtered.filter(l => l.status === 'Pendente');
   const totalRev = confirmed.reduce((s, l) => s + l.revenue, 0);
   const totalPay = confirmed.reduce((s, l) => s + (l.work_log_employees||[]).reduce((ps, e) => ps + e.payment_amount, 0), 0);
 
   document.getElementById('cl-period-stats').innerHTML = `
+    <div class="summary-block">
+      <span>Pendentes</span>
+      <span class="badge badge-pending">${pending.length}</span>
+    </div>
     <div class="summary-block">
       <span>Confirmados</span>
       <span class="badge badge-secondary">${confirmed.length}</span>
@@ -1573,6 +1575,9 @@ function renderChecklist() {
       const emp = getEmployee(we.employee_id);
       return `${emp?.name || '?'}: ${fmt(we.payment_amount)}`;
     }).join(' | ');
+    const statusBadge = l.status === 'Confirmado'
+      ? 'badge-secondary' : l.status === 'Cancelado'
+      ? 'badge-destructive' : 'badge-pending';
     return `
       <div class="log-row">
         <div class="log-info">
@@ -1582,9 +1587,12 @@ function renderChecklist() {
           ${l.cancellation_reason ? `<div style="font-size:12px;color:var(--destructive);margin-top:2px">Cancelado: ${l.cancellation_reason}</div>` : ''}
         </div>
         <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-          <span class="badge ${l.status === 'Confirmado' ? 'badge-secondary' : 'badge-destructive'}">${l.status}</span>
+          <span class="badge ${statusBadge}">${l.status}</span>
           ${l.status === 'Confirmado' ? `<div class="log-revenue">${fmt(l.revenue)}</div>` : ''}
-          <button class="btn btn-danger btn-icon btn-sm" onclick="deleteWorkLog('${l.id}')">🗑</button>
+          <div style="display:flex;gap:4px">
+            <button class="btn btn-ghost btn-icon btn-sm" title="Editar" onclick="editWorkLog('${l.id}')">✏</button>
+            <button class="btn btn-danger btn-icon btn-sm" title="Apagar" onclick="deleteWorkLog('${l.id}')">🗑</button>
+          </div>
         </div>
       </div>
     `;
@@ -1605,7 +1613,49 @@ function addEmpRow() {
   container.appendChild(div);
 }
 
+function openAddWorkLog() {
+  document.getElementById('checklist-modal-title').textContent = '💵 Novo Registro de Trabalho';
+  document.getElementById('cl-edit-id').value = '';
+  document.getElementById('cl-client').value = '';
+  document.getElementById('cl-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('cl-status').value = 'Pendente';
+  document.getElementById('cl-reason').value = '';
+  document.getElementById('cl-reason-group').style.display = 'none';
+  document.getElementById('cl-revenue').value = '';
+  document.getElementById('cl-emp-rows').innerHTML = '';
+  openModal('checklist-modal');
+}
+
+function editWorkLog(id) {
+  const l = db.workLogs.find(w => w.id === id);
+  if (!l) return;
+  document.getElementById('checklist-modal-title').textContent = '✏ Editar Registro';
+  document.getElementById('cl-edit-id').value = id;
+  document.getElementById('cl-client').value = l.client_id;
+  document.getElementById('cl-date').value = l.work_date;
+  document.getElementById('cl-status').value = l.status;
+  document.getElementById('cl-reason').value = l.cancellation_reason || '';
+  document.getElementById('cl-reason-group').style.display = l.status === 'Cancelado' ? 'block' : 'none';
+  document.getElementById('cl-revenue').value = l.revenue || '';
+  const container = document.getElementById('cl-emp-rows');
+  container.innerHTML = '';
+  (l.work_log_employees || []).forEach(we => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:8px;margin-bottom:8px;align-items:center';
+    div.innerHTML = `
+      <select class="form-control emp-row-emp" style="flex:1">
+        ${db.employees.map(e => `<option value="${e.id}" ${e.id === we.employee_id ? 'selected' : ''}>${e.name}</option>`).join('')}
+      </select>
+      <input type="number" class="form-control emp-row-pay" value="${we.payment_amount}" step="0.01" style="width:100px"/>
+      <button class="btn btn-danger btn-icon btn-sm" onclick="this.parentElement.remove()">✕</button>
+    `;
+    container.appendChild(div);
+  });
+  openModal('checklist-modal');
+}
+
 function saveWorkLog() {
+  const editId = document.getElementById('cl-edit-id').value;
   const clientId = document.getElementById('cl-client').value;
   const date = document.getElementById('cl-date').value;
   const status = document.getElementById('cl-status').value;
@@ -1616,10 +1666,21 @@ function saveWorkLog() {
     employee_id: div.querySelector('.emp-row-emp').value,
     payment_amount: parseFloat(div.querySelector('.emp-row-pay').value) || 0,
   }));
-  db.workLogs.push({ id: uid(), client_id: clientId, work_date: date, status, cancellation_reason: reason, revenue: status === 'Confirmado' ? revenue : 0, work_log_employees: emps });
+  if (editId) {
+    const l = db.workLogs.find(w => w.id === editId);
+    if (l) {
+      l.client_id = clientId; l.work_date = date; l.status = status;
+      l.cancellation_reason = reason;
+      l.revenue = status === 'Confirmado' ? revenue : 0;
+      l.work_log_employees = emps;
+    }
+    toast('Registro atualizado!','success');
+  } else {
+    db.workLogs.push({ id: uid(), client_id: clientId, work_date: date, status, cancellation_reason: reason, revenue: status === 'Confirmado' ? revenue : 0, work_log_employees: emps });
+    toast('Registro adicionado!','success');
+  }
   closeModal('checklist-modal');
   document.getElementById('cl-emp-rows').innerHTML = '';
-  toast('Registro adicionado!','success');
   renderChecklist();
   renderDashboard();
 }
@@ -1631,6 +1692,7 @@ function deleteWorkLog(id) {
   db.workLogs = db.workLogs.filter(l => l.id !== id);
   toast('Registro removido','success');
   renderChecklist();
+  renderDashboard();
 }
 
 // ════════════════════════════════════════════════
@@ -2007,26 +2069,37 @@ function renderReferrals() {
   const refHtml = r => {
     const emp = getEmployee(r.employee_id);
     return `
-      <div class="referral-item ${r.status}">
+      <div class="referral-item ${r.status}" style="margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
           <div>
             <div style="font-weight:700;font-size:15px">${r.client_name}</div>
             <div style="font-size:12px;color:var(--text-muted)">👤 Indicado por: ${emp?.name || '?'}</div>
           </div>
-          <span class="badge ${r.status === 'pending' ? 'badge-warning' : r.status === 'approved' ? 'badge-secondary' : 'badge-destructive'}">
-            ${r.status === 'pending' ? 'Pendente' : r.status === 'approved' ? 'Aprovado' : 'Rejeitado'}
-          </span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="badge ${r.status === 'pending' ? 'badge-warning' : r.status === 'approved' ? 'badge-secondary' : 'badge-destructive'}">
+              ${r.status === 'pending' ? 'Pendente' : r.status === 'approved' ? 'Aprovado' : 'Rejeitado'}
+            </span>
+            <button class="btn btn-danger btn-icon btn-sm" title="Apagar" onclick="deleteReferral('${r.id}')">🗑</button>
+          </div>
         </div>
         <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px">
           📞 ${r.phone} | 📍 ${r.address} | 📮 ${r.zip_code}
         </div>
         ${r.bonus_amount > 0 ? `<div style="font-size:13px;font-weight:600;color:var(--secondary);margin-bottom:8px">🎁 Bônus: ${fmt(r.bonus_amount)}</div>` : ''}
-        ${r.status === 'pending' ? `
-          <div style="display:flex;gap:6px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${r.status === 'pending' ? `
             <button class="btn btn-secondary btn-sm" onclick="openRefApprove('${r.id}')">✅ Aprovar</button>
             <button class="btn btn-danger btn-sm" onclick="rejectRef('${r.id}')">❌ Rejeitar</button>
-          </div>
-        ` : ''}
+          ` : ''}
+          ${r.status === 'approved' ? `
+            <button class="btn btn-outline btn-sm" onclick="pendingRef('${r.id}')">↩ Voltar para Pendente</button>
+            <button class="btn btn-danger btn-sm" onclick="rejectRef('${r.id}')">❌ Rejeitar</button>
+          ` : ''}
+          ${r.status === 'rejected' ? `
+            <button class="btn btn-outline btn-sm" onclick="pendingRef('${r.id}')">↩ Voltar para Pendente</button>
+            <button class="btn btn-secondary btn-sm" onclick="openRefApprove('${r.id}')">✅ Aprovar</button>
+          ` : ''}
+        </div>
       </div>
     `;
   };
@@ -2060,6 +2133,20 @@ function rejectRef(id) {
   const r = db.referrals.find(r => r.id === id);
   if (r) r.status = 'rejected';
   toast('Indicação rejeitada','success');
+  renderReferrals();
+}
+
+function deleteReferral(id) {
+  if (!confirm('Apagar esta indicação permanentemente?')) return;
+  db.referrals = db.referrals.filter(r => r.id !== id);
+  toast('Indicação apagada','success');
+  renderReferrals();
+}
+
+function pendingRef(id) {
+  const r = db.referrals.find(r => r.id === id);
+  if (r) { r.status = 'pending'; r.bonus_amount = 0; }
+  toast('Indicação voltou para Pendente','success');
   renderReferrals();
 }
 
@@ -2349,12 +2436,4 @@ function saveEmpRef() {
   });
   document.getElementById('eref-name').value = '';
   document.getElementById('eref-phone').value = '';
-  document.getElementById('eref-address').value = '';
-  document.getElementById('eref-zip').value = '';
-  closeModal('emp-ref-modal');
-  toast('Indicação enviada! Aguarde aprovação.','success');
-  renderEmpReferrals();
-}
-</script>
-</body>
-</html>
+  document.getEl
