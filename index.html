@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="description" content="WR Cleaning Service — Sistema de Gestão Financeira para controle de clientes, funcionários, agendamentos e finanças.">
+<meta name="description" content="WR Cleaning Service — Sistema de Gestão Financeira.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>WR Cleaning Service</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,108 +211,52 @@ textarea.form-control{resize:vertical;min-height:80px}
   .sidebar-overlay.open{display:block}
 }
 
-/* ── PASSWORD TOGGLE ── */
-.pass-wrapper{position:relative}
-.pass-wrapper .form-control{padding-right:44px}
-.pass-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;display:flex;align-items:center}
-.pass-toggle:hover{color:var(--primary)}
-
-/* ── FORM VALIDATION ── */
+/* PASSWORD TOGGLE */
+.pass-wrapper{position:relative}.pass-wrapper .form-control{padding-right:44px}
+.pass-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;display:flex;align-items:center}.pass-toggle:hover{color:var(--primary)}
+/* FORM VALIDATION */
 .form-control.is-error{border-color:var(--destructive)!important;box-shadow:0 0 0 3px rgba(239,68,68,.12)}
-.form-error{color:var(--destructive);font-size:11px;margin-top:4px;display:none;font-weight:500}
-.form-error.show{display:block}
-
-/* ── CHARTS ── */
+.form-error{color:var(--destructive);font-size:11px;margin-top:4px;display:none;font-weight:500}.form-error.show{display:block}
+/* CHARTS */
 .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .chart-container{position:relative;height:270px;padding:4px 8px 12px}
-
-/* ══════════════════════════════════════
-   AGENDA MOBILE — responsive schedule
-══════════════════════════════════════ */
-
-/* Wrapper for horizontal scroll on mobile */
+/* USER ROLE BADGE */
+.role-badge-adm{background:#dbeafe;color:#1d4ed8;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700}
+.role-badge-col{background:#d1fae5;color:#065f46;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:700}
+.no-login-badge{background:#f1f5f9;color:#94a3b8;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600}
+/* AGENDA MOBILE */
 .week-scroll-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
 .week-scroll-wrapper::-webkit-scrollbar{height:4px}
 .week-scroll-wrapper::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-
-/* Day columns default */
 .day-col{min-width:120px}
-
-/* Schedule list mobile tweaks */
 .schedule-header-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .schedule-nav-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-
-/* Schedule item card full info */
-.schedule-item .item-client{font-size:12px;font-weight:600;margin-bottom:2px}
-.schedule-item .item-emp{font-size:10px;color:var(--text-muted)}
-
-/* Log row mobile ─ stack instead of flex */
 .log-row-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-
-/* ── PRINT ── */
-@media print{
-  .sidebar,.app-header,.mobile-menu-btn,.charts-grid,.notif-banner,.btn,.card:first-child{display:none!important}
-  .main-content{padding:0}
-  body{background:#fff}
-}
-
-/* ── RESPONSIVE 768px ── */
+/* PRINT */
+@media print{.sidebar,.app-header,.mobile-menu-btn,.charts-grid,.notif-banner,.btn{display:none!important}.main-content{padding:0}body{background:#fff}}
 @media(max-width:768px){
-  /* Schedule header */
   .schedule-header-row{flex-direction:column;align-items:flex-start}
-  /* Week grid: keep day-col min-width so it scrolls horizontally */
   .week-grid{grid-template-columns:repeat(7,minmax(108px,1fr));min-width:756px}
-  /* Log rows */
   .log-row-inner{flex-direction:column;gap:6px}
-  .log-row .log-revenue{font-size:14px}
 }
-
-/* ── RESPONSIVE 480px ── */
 @media(max-width:480px){
-  .grid-4{grid-template-columns:1fr 1fr}
-  .grid-3{grid-template-columns:1fr 1fr}
-  .grid-2{grid-template-columns:1fr}
-  .charts-grid{grid-template-columns:1fr}
-  .stat-card .stat-value{font-size:20px}
-  .main-content{padding:10px}
-  .modal{padding:16px 14px;margin:8px}
-  .login-card{padding:28px 18px}
-  /* Schedule */
+  .grid-4{grid-template-columns:1fr 1fr}.grid-3{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}
+  .charts-grid{grid-template-columns:1fr}.stat-card .stat-value{font-size:20px}
+  .main-content{padding:10px}.modal{padding:16px 14px}.login-card{padding:28px 18px}
   .week-grid{grid-template-columns:repeat(7,minmax(90px,1fr));min-width:630px}
-  .day-col{padding:6px;min-width:90px}
-  .day-col .day-num{font-size:14px}
-  .schedule-item{padding:4px 6px;font-size:10px}
-  .schedule-nav-group{width:100%;justify-content:space-between}
-  /* log row on mobile */
-  .log-row{flex-direction:column;gap:8px}
-  .log-row-inner{flex-direction:row}
-  /* page-header */
-  .page-header{flex-direction:column;align-items:flex-start;gap:8px}
-  .page-header > div{width:100%;justify-content:space-between}
-  /* Card header */
-  .card-header{flex-wrap:wrap;gap:6px}
+  .day-col{padding:6px;min-width:90px}.schedule-nav-group{width:100%;justify-content:space-between}
+  .log-row{flex-direction:column;gap:8px}.page-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .page-header > div{width:100%;justify-content:space-between}.card-header{flex-wrap:wrap;gap:6px}
 }
-
-/* ── DARK MODE ── */
 @media(prefers-color-scheme:dark){
-  :root{
-    --bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text-muted:#94a3b8;
-    --border:#334155;--primary-light:#1e3a5f;--secondary-light:#064e3b;
-    --destructive-light:#450a0a;--warning-light:#431407
-  }
+  :root{--bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text-muted:#94a3b8;--border:#334155;--primary-light:#1e3a5f;--secondary-light:#064e3b;--destructive-light:#450a0a;--warning-light:#431407}
   .form-control{background:#0f172a;color:var(--text);border-color:var(--border)}
   select.form-control option{background:#1e293b;color:#f1f5f9}
-  .login-logo h1{-webkit-text-fill-color:unset;background:none;color:var(--primary)}
-  .header-logo h2{-webkit-text-fill-color:unset;background:none;color:var(--primary)}
+  .login-logo h1,.header-logo h2{-webkit-text-fill-color:unset;background:none;color:var(--primary)}
   #login-page{background:linear-gradient(135deg,#1e293b 0%,#0f172a 60%,#064e3b 100%)}
-  .tab-btn.active{background:var(--card)}
-  .schedule-item{background:#1e293b}
-  .day-col{border-color:#334155}
-  .day-col.today{background:#1e3a5f;border-color:var(--primary)}
-  .summary-block{background:#1e3a5f}
-  .notif-banner{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3)}
+  .tab-btn.active{background:var(--card)}.schedule-item{background:#1e293b}
+  .day-col.today{background:#1e3a5f;border-color:var(--primary)}.summary-block{background:#1e3a5f}
   .table tr:hover td{background:#1e3a5f}
-  .week-scroll-wrapper::-webkit-scrollbar-thumb{background:#334155}
 }
 
 </style>
@@ -340,7 +284,7 @@ textarea.form-control{resize:vertical;min-height:80px}
         <label for="login-pass">Senha</label>
         <div class="pass-wrapper">
           <input type="password" class="form-control" id="login-pass" placeholder="••••••" autocomplete="current-password"/>
-          <button class="pass-toggle" id="toggle-pass" type="button" aria-label="Mostrar/ocultar senha">
+          <button class="pass-toggle" id="toggle-pass" type="button" aria-label="Mostrar senha">
             <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
         </div>
@@ -392,7 +336,7 @@ textarea.form-control{resize:vertical;min-height:80px}
         <button class="nav-item" data-tab="employees" aria-label="Funcionários"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>Funcionários</span></button>
         <button class="nav-item" data-tab="costs" aria-label="Custos"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>Custos</span></button>
         <button class="nav-item" data-tab="notifications" aria-label="Notificações"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Notificações</span><span class="nav-badge hidden" id="notif-badge">0</span></button>
-        <button class="nav-item" data-tab="frequencies" aria-label="Frequências"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/></svg><span>Frequências</span></button>
+        <button class="nav-item" data-tab="frequencies" aria-label="Frequências"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/></svg><span>Frequências</span></button>
         <button class="nav-item" data-tab="referrals" aria-label="Indicações"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Indicações</span></button>
         <button class="nav-item" data-tab="profile" aria-label="Perfil"><svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Perfil</span></button>
       </nav>
@@ -432,25 +376,17 @@ textarea.form-control{resize:vertical;min-height:80px}
 
       <!-- SCHEDULE -->
       <div class="tab-content" id="tab-schedule">
-        <div class="schedule-header-row">
-          <h2 style="font-size:20px;font-weight:800">📅 Agenda Semanal</h2>
-          <div class="schedule-nav-group">
-            <button class="btn btn-outline btn-sm" id="prev-week" aria-label="Semana anterior">◀</button>
-            <span id="week-label" style="font-size:13px;font-weight:600;white-space:nowrap"></span>
-            <button class="btn btn-outline btn-sm" id="next-week" aria-label="Próxima semana">▶</button>
+        <div class="page-header">
+          <h2>📅 Agenda Semanal</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btn-outline btn-sm" id="prev-week">◀</button>
+            <span id="week-label" style="font-size:13px;font-weight:600"></span>
+            <button class="btn btn-outline btn-sm" id="next-week">▶</button>
             <button class="btn btn-primary btn-sm" id="btn-add-schedule">+ Adicionar</button>
           </div>
         </div>
-        <div class="week-scroll-wrapper">
-          <div class="week-grid" id="week-grid"></div>
-        </div>
-        <div class="card mt-4">
-          <div class="card-header">
-            <h3>Lista de Agendamentos</h3>
-            <span id="schedule-count-badge" class="badge badge-gray" style="font-size:11px"></span>
-          </div>
-          <div class="card-body" id="schedule-list"></div>
-        </div>
+        <div class="week-scroll-wrapper"><div class="week-grid" id="week-grid"></div></div>
+        <div class="card mt-4"><div class="card-header"><h3>Lista de Agendamentos</h3><span id="schedule-count-badge" class="badge badge-gray" style="font-size:11px"></span></div><div class="card-body" id="schedule-list"></div></div>
       </div>
 
       <!-- CHECKLIST -->
@@ -493,7 +429,7 @@ textarea.form-control{resize:vertical;min-height:80px}
         <div id="active-emps">
           <div class="page-header"><h2>💼 Funcionários</h2><button class="btn btn-primary" id="btn-add-emp">+ Adicionar</button></div>
           <div class="card"><div class="card-body table-responsive">
-            <table class="table"><thead><tr><th>Nome</th><th>Email</th><th>Desde</th><th>Ações</th></tr></thead><tbody id="emp-table-body"></tbody></table>
+            <table class="table"><thead><tr><th>Nome</th><th>Email</th><th>Papel</th><th>Desde</th><th>Ações</th></tr></thead><tbody id="emp-table-body"></tbody></table>
           </div></div>
         </div>
         <div id="pending-users" class="hidden">
@@ -689,11 +625,52 @@ textarea.form-control{resize:vertical;min-height:80px}
 </div>
 
 <div class="modal-overlay hidden" id="emp-modal">
-  <div class="modal"><h2>💼 Adicionar Funcionário</h2>
-    <div class="form-group"><label>Nome</label><input type="text" class="form-control" id="emp-name" placeholder="Nome completo"/></div>
-    <div class="form-group"><label>Email</label><input type="email" class="form-control" id="emp-email" placeholder="email@exemplo.com"/></div>
-    <div class="form-group"><label>Senha</label><input type="password" class="form-control" id="emp-pass" placeholder="••••••"/></div>
-    <div style="display:flex;gap:8px"><button class="btn btn-primary" id="btn-save-emp">Criar</button><button class="btn btn-outline" id="btn-cancel-emp">Cancelar</button></div>
+  <div class="modal">
+    <h2>💼 Adicionar Funcionário</h2>
+    <div class="form-group"><label>Nome completo</label><input type="text" class="form-control" id="emp-name" placeholder="Nome completo"/></div>
+    <div class="form-group"><label>Email (login)</label><input type="email" class="form-control" id="emp-email" placeholder="email@exemplo.com"/></div>
+    <div class="form-group">
+      <label>Senha</label>
+      <div class="pass-wrapper">
+        <input type="password" class="form-control" id="emp-pass" placeholder="Mínimo 6 caracteres"/>
+        <button class="pass-toggle" type="button" onclick="toggleFieldPass('emp-pass',this)" aria-label="Mostrar senha">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="form-group"><label>Papel</label>
+      <select class="form-control" id="emp-role">
+        <option value="colaborador">Colaborador</option>
+        <option value="adm">Administrador</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-primary" id="btn-save-emp">✅ Criar Funcionário</button><button class="btn btn-outline" id="btn-cancel-emp">Cancelar</button></div>
+  </div>
+</div>
+
+<!-- ══ MODAL EDITAR FUNCIONÁRIO ══ -->
+<div class="modal-overlay hidden" id="edit-emp-modal">
+  <div class="modal">
+    <h2>✏️ Editar Funcionário</h2>
+    <input type="hidden" id="edit-emp-id"/>
+    <div class="form-group"><label>Nome completo</label><input type="text" class="form-control" id="edit-emp-name" placeholder="Nome completo"/></div>
+    <div class="form-group"><label>Email (login)</label><input type="email" class="form-control" id="edit-emp-email" placeholder="email@exemplo.com"/></div>
+    <div class="form-group">
+      <label>Nova Senha <span style="font-size:11px;color:var(--text-muted)">(deixe em branco para manter)</span></label>
+      <div class="pass-wrapper">
+        <input type="password" class="form-control" id="edit-emp-pass" placeholder="Nova senha (opcional)"/>
+        <button class="pass-toggle" type="button" onclick="toggleFieldPass('edit-emp-pass',this)" aria-label="Mostrar senha">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="form-group"><label>Papel</label>
+      <select class="form-control" id="edit-emp-role">
+        <option value="colaborador">Colaborador</option>
+        <option value="adm">Administrador</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px"><button class="btn btn-primary" id="btn-save-edit-emp">💾 Salvar Alterações</button><button class="btn btn-outline" id="btn-cancel-edit-emp">Cancelar</button></div>
   </div>
 </div>
 
@@ -720,7 +697,22 @@ textarea.form-control{resize:vertical;min-height:80px}
   <div class="modal"><h2>✅ Aprovar Usuário</h2>
     <input type="hidden" id="approve-user-id"/>
     <div class="form-group"><label>Nome do Funcionário</label><input type="text" class="form-control" id="approve-name" placeholder="Nome completo"/></div>
-    <div style="display:flex;gap:8px"><button class="btn btn-secondary" id="btn-approve-user">Aprovar</button><button class="btn btn-outline" id="btn-cancel-approve">Cancelar</button></div>
+    <div class="form-group">
+      <label>Senha inicial</label>
+      <div class="pass-wrapper">
+        <input type="password" class="form-control" id="approve-pass" placeholder="Mínimo 6 caracteres" value="123456"/>
+        <button class="pass-toggle" type="button" onclick="toggleFieldPass('approve-pass',this)" aria-label="Mostrar senha">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="form-group"><label>Papel</label>
+      <select class="form-control" id="approve-role">
+        <option value="colaborador">Colaborador</option>
+        <option value="adm">Administrador</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px"><button class="btn btn-secondary" id="btn-approve-user">✅ Aprovar e Criar Login</button><button class="btn btn-outline" id="btn-cancel-approve">Cancelar</button></div>
   </div>
 </div>
 
@@ -962,8 +954,7 @@ function renderSchedule(){
   const dn=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   $('week-grid').innerHTML=days.map((d,i)=>{const ds=d.toISOString().split('T')[0];const entries=db.scheduleEntries.filter(e=>e.work_date===ds);return`<div class="day-col ${ds===todayStr?'today':''}"><div class="day-label">${dn[i]}</div><div class="day-num">${d.getDate()}</div>${entries.map(e=>{const cl=getClient(e.client_id);return`<div class="schedule-item ${e.status}"><div style="font-weight:600">${cl?cl.name:'?'}</div><span class="badge ${e.status==='confirmado'?'badge-secondary':e.status==='cancelado'?'badge-destructive':'badge-warning'}" style="font-size:10px">${e.status}</span></div>`}).join('')}</div>`}).join('');
   const weekEntries=db.scheduleEntries.filter(e=>e.work_date>=startStr&&e.work_date<=endStr).sort((a,b)=>a.work_date.localeCompare(b.work_date));
-  const scBadge=document.getElementById('schedule-count-badge');if(scBadge)scBadge.textContent=weekEntries.length?weekEntries.length+' agendamento'+(weekEntries.length>1?'s':''):'';
-  $('schedule-list').innerHTML=weekEntries.length===0?'<div class="empty"><div class="icon">📅</div>Nenhum agendamento esta semana</div>':weekEntries.map(e=>{const cl=getClient(e.client_id);const emps=(e.employee_ids||[]).map(id=>getEmployee(id)?.name||id).join(', ');return`<div class="log-row"><div class="log-row-inner"><div class="log-info" style="flex:1"><div class="log-date">${fmtDate(e.work_date)}</div><div class="log-client">${cl?cl.name:'?'}</div><div class="log-employees">👤 ${emps||'Nenhuma'}</div>${e.notes?`<div style="font-size:12px;color:var(--text-muted);font-style:italic">"${e.notes}"</div>`:''}</div><div style="display:flex;align-items:center;gap:8px;flex-shrink:0"><span class="badge ${e.status==='confirmado'?'badge-secondary':e.status==='cancelado'?'badge-destructive':'badge-warning'}">${e.status}</span><button class="btn btn-danger btn-icon btn-sm" data-del-schedule="${e.id}">🗑</button></div></div></div>`}).join('');
+  $('schedule-list').innerHTML=weekEntries.length===0?'<div class="empty"><div class="icon">📅</div>Nenhum agendamento esta semana</div>':weekEntries.map(e=>{const cl=getClient(e.client_id);const emps=(e.employee_ids||[]).map(id=>getEmployee(id)?.name||id).join(', ');return`<div class="log-row"><div class="log-info"><div class="log-date">${fmtDate(e.work_date)}</div><div class="log-client">${cl?cl.name:'?'}</div><div class="log-employees">👤 ${emps||'Nenhuma'}</div>${e.notes?`<div style="font-size:12px;color:var(--text-muted);font-style:italic">"${e.notes}"</div>`:''}</div><div style="display:flex;align-items:center;gap:8px"><span class="badge ${e.status==='confirmado'?'badge-secondary':e.status==='cancelado'?'badge-destructive':'badge-warning'}">${e.status}</span><button class="btn btn-danger btn-icon btn-sm" data-del-schedule="${e.id}">🗑</button></div></div>`}).join('');
 }
 
 // ════════════ CHECKLIST ════════════
@@ -1066,24 +1057,58 @@ function saveClient(){
 
 // ════════════ EMPLOYEES ════════════
 function renderEmployees(){
-  $('emp-table-body').innerHTML=db.employees.map(e=>`<tr><td><strong>${e.name}</strong></td><td>${e.email}</td><td>${fmtDate(e.created_at)}</td><td><button class="btn btn-danger btn-icon btn-sm" data-del-emp="${e.id}">🗑</button></td></tr>`).join('');
+  $('emp-table-body').innerHTML=db.employees.map(e=>{
+    const u=Object.values(USERS).find(u=>u.email===e.email);
+    const roleBadge=u?(u.role==='adm'?`<span class="role-badge-adm">Admin</span>`:`<span class="role-badge-col">Colaborador</span>`):`<span class="no-login-badge">Sem login</span>`;
+    return`<tr>
+      <td><strong>${e.name}</strong></td>
+      <td style="font-size:12px">${e.email}</td>
+      <td>${roleBadge}</td>
+      <td>${fmtDate(e.created_at)}</td>
+      <td><div style="display:flex;gap:4px">
+        <button class="btn btn-ghost btn-icon btn-sm" data-edit-emp="${e.id}" title="Editar">✏️</button>
+        <button class="btn btn-danger btn-icon btn-sm" data-del-emp="${e.id}" title="Remover">🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('');
   $('pending-list').innerHTML=db.pendingUsers.length===0?'<div class="empty"><div class="icon">✅</div>Nenhum usuário pendente</div>':db.pendingUsers.map(u=>`<div class="log-row"><div class="log-info"><div class="log-client">${u.email}</div><div class="log-date">${fmtDate(u.created_at.split('T')[0])}</div></div><div style="display:flex;gap:6px"><button class="btn btn-secondary btn-sm" data-approve-user="${u.id}" data-approve-email="${u.email}">✅ Aprovar</button><button class="btn btn-danger btn-sm" data-reject-user="${u.id}">❌ Rejeitar</button></div></div>`).join('');
 }
 
 function saveEmployee(){
-  const name=$('emp-name').value.trim(),email=$('emp-email').value.trim();
+  const name=$('emp-name').value.trim();
+  const email=$('emp-email').value.trim().toLowerCase();
+  const pass=$('emp-pass').value;
+  const role=$('emp-role').value;
   if(!name||!email){toast('Preencha nome e email','error');return;}
-  db.employees.push({id:uid(),name,email,created_at:new Date().toISOString().split('T')[0]});
-  closeModal('emp-modal');$('emp-name').value='';$('emp-email').value='';$('emp-pass').value='';
-  toast('Funcionário criado!','success');renderEmployees();populateSelects();
+  if(!pass||pass.length<6){toast('Senha precisa ter pelo menos 6 caracteres','error');return;}
+  if(USERS[email]){toast('Este email já está cadastrado','error');return;}
+  const newId=uid();
+  const empRecord={id:newId,name,email,created_at:new Date().toISOString().split('T')[0]};
+  db.employees.push(empRecord);
+  // Cria login válido no USERS
+  USERS[email]={role,email,username:name,password:pass,employeeId:newId};
+  closeModal('emp-modal');
+  $('emp-name').value='';$('emp-email').value='';$('emp-pass').value='';$('emp-role').value='colaborador';
+  toast(`Funcionário "${name}" criado com login!`,'success');
+  renderEmployees();populateSelects();
 }
 
 function approveUser(){
-  const id=$('approve-user-id').value,name=$('approve-name').value.trim();
+  const id=$('approve-user-id').value;
+  const name=$('approve-name').value.trim();
+  const pass=$('approve-pass').value||'123456';
+  const role=$('approve-role').value||'colaborador';
   if(!name){toast('Informe o nome','error');return;}
   const u=db.pendingUsers.find(p=>p.id===id);
-  if(u){db.employees.push({id:uid(),name,email:u.email,created_at:new Date().toISOString().split('T')[0]});db.pendingUsers=db.pendingUsers.filter(p=>p.id!==id);}
-  closeModal('approve-modal');toast('Funcionário aprovado!','success');renderEmployees();
+  if(u){
+    const newId=uid();
+    db.employees.push({id:newId,name,email:u.email,created_at:new Date().toISOString().split('T')[0]});
+    db.pendingUsers=db.pendingUsers.filter(p=>p.id!==id);
+    // Cria login válido no USERS
+    USERS[u.email]={role,email:u.email,username:name,password:pass,employeeId:newId};
+    toast(`"${name}" aprovado(a) com login criado!`,'success');
+  }
+  closeModal('approve-modal');renderEmployees();
 }
 
 // ════════════ COSTS ════════════
@@ -1135,10 +1160,15 @@ function renderReferrals(){
 
 // ════════════ EMPLOYEE APP ════════════
 function initEmpApp(empId){
-  currentEmpId=empId;setEmpPeriod('mes',null);
+  currentEmpId=empId;
   const myClients=db.clients.filter(c=>(c.client_employees||[]).some(ce=>ce.employee_id===empId));
-  $('note-client-sel').innerHTML=myClients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
-  renderEmpGanhos();renderEmpAgenda();renderEmpClients();renderEmpReferrals();
+  $('note-client-sel').innerHTML=myClients.length
+    ?myClients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')
+    :'<option value="">Nenhum cliente</option>';
+  setEmpPeriod('mes',null); // chama renderEmpGanhos internamente
+  renderEmpAgenda();renderEmpClients();renderEmpReferrals();
+  const empObj=db.employees.find(e=>e.id===empId);
+  if(empObj)$('emp-header-sub').textContent=empObj.name;
 }
 
 function empNavigate(tab){
@@ -1146,6 +1176,8 @@ function empNavigate(tab){
   document.querySelector(`.emp-tab-btn[data-etab="${tab}"]`).classList.add('active');
   document.querySelectorAll('#emp-app-page .tab-content').forEach(t=>t.classList.remove('active'));
   $('tab-'+tab).classList.add('active');
+  const renders={'emp-ganhos':renderEmpGanhos,'emp-agenda':renderEmpAgenda,'emp-clientes':renderEmpClients,'emp-indique':renderEmpReferrals};
+  if(renders[tab])renders[tab]();
 }
 
 function setEmpPeriod(period,btn){
@@ -1253,6 +1285,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('btn-add-emp').addEventListener('click',()=>openModal('emp-modal'));
   $('btn-save-emp').addEventListener('click',saveEmployee);
   $('btn-cancel-emp').addEventListener('click',()=>closeModal('emp-modal'));
+  $('btn-save-edit-emp').addEventListener('click',saveEditEmployee);
+  $('btn-cancel-edit-emp').addEventListener('click',()=>closeModal('edit-emp-modal'));
   $('emp-tab-active').addEventListener('click',()=>{$('emp-tab-active').classList.add('active');$('emp-tab-pending').classList.remove('active');$('active-emps').classList.remove('hidden');$('pending-users').classList.add('hidden')});
   $('emp-tab-pending').addEventListener('click',()=>{$('emp-tab-pending').classList.add('active');$('emp-tab-active').classList.remove('active');$('pending-users').classList.remove('hidden');$('active-emps').classList.add('hidden')});
   $('btn-approve-user').addEventListener('click',approveUser);
@@ -1316,10 +1350,22 @@ document.addEventListener('DOMContentLoaded',()=>{
     const el=e.target.dataset.editLog;if(el){editWorkLog(el);return;}
     const dl=e.target.dataset.delLog;if(dl){if(!confirm('Remover registro?'))return;db.workLogs=db.workLogs.filter(l=>l.id!==dl);toast('Registro removido','success');renderChecklist();renderDashboard();return;}
     // Client edit/delete
+    // Employee edit
+    const editEmpId=e.target.dataset.editEmp;if(editEmpId){openEditEmpModal(editEmpId);return;}
     const ec=e.target.dataset.editClient;if(ec){editClient(ec);return;}
     const dc=e.target.dataset.delClient;if(dc){if(!confirm('Remover cliente?'))return;db.clients=db.clients.filter(c=>c.id!==dc);toast('Cliente removido','success');renderClients();return;}
     // Employee delete
-    const de=e.target.dataset.delEmp;if(de){if(!confirm('Remover funcionário?'))return;db.employees=db.employees.filter(e=>e.id!==de);toast('Funcionário removido','success');renderEmployees();return;}
+    const de=e.target.dataset.delEmp;if(de){
+      const empToRemove=db.employees.find(em=>em.id===de);
+      if(!confirm(`Remover "${empToRemove?.name||'funcionário'}"? O acesso ao sistema será revogado.`))return;
+      // Remove do USERS também
+      if(empToRemove){
+        const uk=Object.keys(USERS).find(k=>USERS[k].email===empToRemove.email);
+        if(uk)delete USERS[uk];
+      }
+      db.employees=db.employees.filter(em=>em.id!==de);
+      toast('Funcionário removido','success');renderEmployees();return;
+    }
     // Pending user approve/reject
     const au=e.target.dataset.approveUser;if(au){$('approve-user-id').value=au;$('approve-name').value=(e.target.dataset.approveEmail||'').split('@')[0];openModal('approve-modal');return;}
     const ru=e.target.dataset.rejectUser;if(ru){if(!confirm('Rejeitar usuário?'))return;db.pendingUsers=db.pendingUsers.filter(p=>p.id!==ru);toast('Usuário rejeitado','success');renderEmployees();return;}
@@ -1339,7 +1385,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
-// ════════════ SHOW/HIDE PASSWORD ════════════
+// ════════════ SHOW/HIDE PASSWORD (login) ════════════
 document.addEventListener('DOMContentLoaded',()=>{
   const toggleBtn=$('toggle-pass'),passInp=$('login-pass'),eyeIco=$('eye-icon');
   if(toggleBtn){
@@ -1355,10 +1401,80 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
     });
   }
-  // Export + Print buttons
   document.getElementById('btn-export-csv')?.addEventListener('click',exportRankingCSV);
   document.getElementById('btn-print-dash')?.addEventListener('click',()=>window.print());
 });
+
+// ════════════ TOGGLE SENHA EM QUALQUER CAMPO ════════════
+function toggleFieldPass(fieldId, btn){
+  const inp=document.getElementById(fieldId);
+  if(!inp)return;
+  const isPass=inp.type==='password';
+  inp.type=isPass?'text':'password';
+  btn.setAttribute('aria-label',isPass?'Ocultar senha':'Mostrar senha');
+  // Troca ícone
+  const svgPath=isPass
+    ?'<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+    :'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  btn.querySelector('svg').innerHTML=svgPath;
+}
+
+// ════════════ ABRIR MODAL DE EDIÇÃO DE FUNCIONÁRIO ════════════
+function openEditEmpModal(empId){
+  const emp=db.employees.find(e=>e.id===empId);
+  if(!emp)return;
+  const u=Object.values(USERS).find(u=>u.email===emp.email);
+  $('edit-emp-id').value=emp.id;
+  $('edit-emp-name').value=emp.name;
+  $('edit-emp-email').value=emp.email;
+  $('edit-emp-pass').value=''; // sempre em branco por segurança
+  $('edit-emp-role').value=u?u.role:'colaborador';
+  openModal('edit-emp-modal');
+}
+
+// ════════════ SALVAR EDIÇÃO DE FUNCIONÁRIO ════════════
+function saveEditEmployee(){
+  const empId=$('edit-emp-id').value;
+  const name=$('edit-emp-name').value.trim();
+  const newEmail=$('edit-emp-email').value.trim().toLowerCase();
+  const newPass=$('edit-emp-pass').value;
+  const newRole=$('edit-emp-role').value;
+
+  if(!name||!newEmail){toast('Nome e email são obrigatórios','error');return;}
+  if(newPass&&newPass.length<6){toast('Nova senha precisa ter pelo menos 6 caracteres','error');return;}
+
+  const emp=db.employees.find(e=>e.id===empId);
+  if(!emp)return;
+
+  // Verifica se o novo email já está em uso por outro usuário
+  const emailConflict=Object.values(USERS).find(u=>u.email===newEmail&&u.email!==emp.email);
+  if(emailConflict){toast('Este email já está em uso por outro usuário','error');return;}
+
+  const oldEmail=emp.email;
+
+  // Atualiza db.employees
+  emp.name=name;
+  emp.email=newEmail;
+
+  // Atualiza USERS — remove entrada antiga e cria nova
+  const oldKey=Object.keys(USERS).find(k=>USERS[k].email===oldEmail);
+  const existingPass=oldKey?USERS[oldKey].password:'123456';
+
+  if(oldKey)delete USERS[oldKey];
+
+  USERS[newEmail]={
+    role:newRole,
+    email:newEmail,
+    username:name,
+    password:newPass||existingPass, // mantém senha se campo vazio
+    employeeId:empId
+  };
+
+  closeModal('edit-emp-modal');
+  toast(`Dados de "${name}" atualizados com sucesso!`,'success');
+  renderEmployees();
+  populateSelects();
+}
 
 // ════════════ CHARTS ════════════
 let _chartRC=null,_chartP=null;
@@ -1371,16 +1487,13 @@ function renderCharts(confirmed){
     cm[c.name].pay+=(l.work_log_employees||[]).reduce((s,e)=>s+e.payment_amount,0);
   });
   const labels=Object.keys(cm);
-  const revs=labels.map(k=>cm[k].rev);
-  const pays=labels.map(k=>cm[k].pay);
   const ctx1=document.getElementById('chart-revenue-cost');
   if(ctx1){
     if(_chartRC)_chartRC.destroy();
-    _chartRC=new Chart(ctx1,{
-      type:'bar',
+    _chartRC=new Chart(ctx1,{type:'bar',
       data:{labels,datasets:[
-        {label:'Receita',data:revs,backgroundColor:'rgba(37,99,235,0.82)',borderRadius:5},
-        {label:'Custo M.O.',data:pays,backgroundColor:'rgba(239,68,68,0.78)',borderRadius:5}
+        {label:'Receita',data:labels.map(k=>cm[k].rev),backgroundColor:'rgba(37,99,235,0.82)',borderRadius:5},
+        {label:'Custo M.O.',data:labels.map(k=>cm[k].pay),backgroundColor:'rgba(239,68,68,0.78)',borderRadius:5}
       ]},
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{position:'top'}},
@@ -1389,21 +1502,13 @@ function renderCharts(confirmed){
   }
   const sorted=[...confirmed].sort((a,b)=>a.work_date.localeCompare(b.work_date));
   const bd={};
-  sorted.forEach(l=>{
-    const pay=(l.work_log_employees||[]).reduce((s,e)=>s+e.payment_amount,0);
-    bd[l.work_date]=(bd[l.work_date]||0)+(l.revenue-pay);
-  });
+  sorted.forEach(l=>{const pay=(l.work_log_employees||[]).reduce((s,e)=>s+e.payment_amount,0);bd[l.work_date]=(bd[l.work_date]||0)+(l.revenue-pay);});
   const ctx2=document.getElementById('chart-profit');
   if(ctx2){
     if(_chartP)_chartP.destroy();
-    _chartP=new Chart(ctx2,{
-      type:'line',
-      data:{
-        labels:Object.keys(bd).map(d=>fmtDate(d)),
-        datasets:[{label:'Lucro',data:Object.values(bd),
-          borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.12)',
-          fill:true,tension:0.4,pointRadius:5,pointHoverRadius:7}]
-      },
+    _chartP=new Chart(ctx2,{type:'line',
+      data:{labels:Object.keys(bd).map(d=>fmtDate(d)),
+        datasets:[{label:'Lucro',data:Object.values(bd),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.12)',fill:true,tension:0.4,pointRadius:5,pointHoverRadius:7}]},
       options:{responsive:true,maintainAspectRatio:false,
         plugins:{legend:{position:'top'}},
         scales:{y:{beginAtZero:true,ticks:{callback:v=>'R$'+v}}}}
@@ -1429,7 +1534,7 @@ function exportRankingCSV(){
   const csv=rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`ranking-clientes-${start}-${end}.csv`;a.click();
+  a.download=`ranking-${start}-${end}.csv`;a.click();
 }
 </script>
 </body>
